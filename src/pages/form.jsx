@@ -23,27 +23,46 @@ function EmailForm() {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        placeholder="To"
-        value={to}
-        onChange={(e) => setTo(e.target.value)}
-      />
-      <input
-        type="text"
-        placeholder="Subject"
-        value={subject}
-        onChange={(e) => setSubject(e.target.value)}
-      />
-      <textarea
-        rows="3"
-        placeholder="Message"
-        value={message}
-        onChange={(e) => setMessage(e.target.value)}
-      ></textarea>
-      <button type="submit">Send Email</button>
-    </form>
+    <div className="container">
+      <div className="box">
+        <h2>Welcome</h2>
+        <p>Please enter the required information to send an email.</p>
+        <form onSubmit={handleSubmit}>
+          <div className="inputGroup">
+            <label htmlFor="email">Send email to :</label>
+            <input
+              type="email"
+              id="email"
+              value={to}
+              onChange={(e) => setTo(e.target.value)}
+            />
+          </div>
+          <div className="inputGroup">
+            <label htmlFor="subject">Email subject :</label>
+            <input
+              type="text"
+              id="subject"
+              value={subject}
+              onChange={(e) => setSubject(e.target.value)}
+            />
+          </div>
+
+          <div className="inputGroup">
+            <label htmlFor="message">Email message :</label>
+            <textarea
+              rows="3"
+              id="message"
+              value={message}
+              onChange={(e) => setMessage(e.target.value)}
+            ></textarea>
+          </div>
+
+          <button className="submitBtn" type="submit">
+            Send Email
+          </button>
+        </form>
+      </div>
+    </div>
   );
 }
 
