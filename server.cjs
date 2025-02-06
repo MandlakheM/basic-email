@@ -1,7 +1,7 @@
 const express = require("express");
 const nodemailer = require("nodemailer");
 const cors = require("cors");
-require('dotenv').config(); 
+require('dotenv').config();
 
 const app = express();
 app.use(cors());
@@ -21,17 +21,28 @@ const transporter = nodemailer.createTransport({
 });
 
 app.post("/api/send", (req, res) => {
-  const { from, to, subject, message } = req.body;
+  const { fromEmail, fromName, to, subject, message } = req.body;
 
-  if (!from || !to || !subject || !message) {
+  if (!fromEmail || !fromName || !subject || !message) {
     return res.status(400).send("Missing required fields");
   }
 
   const mailOptions = {
-    from,
-    to,
-    subject,
-    html: message,
+    from: {
+      name: fromName,
+      address: process.env.EMAIL_USER 
+    },
+    replyTo: fromEmail, 
+    to: process.env.EMAIL_USER, 
+    subject: `Portfolio Contact: ${subject}`,
+    html: `
+      <p><strong>From:</strong> ${fromName} (${fromEmail})</p>
+      <p><strong>Subject:</strong> ${subject}</p>
+      <div style="margin-top: 20px;">
+        <p><strong>Message:</strong></p>
+        ${message}
+      </div>
+    `,
   };
 
   transporter.sendMail(mailOptions, (error, info) => {
